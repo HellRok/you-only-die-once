@@ -34,7 +34,7 @@ class Health
 
   def position_at(index)
     if index == 0
-      @cursor.x = 0
+      @cursor.x = 240
     else
       @cursor.x += 32
     end

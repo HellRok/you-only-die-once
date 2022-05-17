@@ -28,6 +28,7 @@ $tilemap = Tilemap.new(
 )
 
 $tiles = image.to_texture
+#$tiles = image.copy.replace!(WHITE, Colour.new(255, 0, 255, 0)).to_texture
 
 $map = $tilemap.generate_from('./assets/map.csv').to_texture
 
