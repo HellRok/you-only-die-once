@@ -1,8 +1,15 @@
 # Add the path ./vendor so we can easily require third party libraries.
 $: << './vendor'
 
-require 'lib/tilemap'
 require 'rok-engine/core'
+require 'rok-engine/extras'
+
+require 'lib/tilemap'
+
+require 'nodes/health'
+
+require 'scenes/taylor_splash'
+require 'scenes/main'
 
 # Open up a window
 init_window(640, 480, "You Only Die Once")
@@ -13,13 +20,44 @@ init_audio_device
 # Get the current monitor frame rate and set our target framerate to match.
 set_target_fps(get_monitor_refresh_rate(get_current_monitor))
 
+image = Image.load('./assets/tilemap.png').resize!(width: 272 * 2, height: 128 * 2)
 $resources = ResourceManager.new
 $tilemap = Tilemap.new(
-  image: Image.load('./assets/tilemap.png').resize!(width: 272 * 2, height: 128 * 2),
+  image: image,
   size: 32
 )
 
+$tiles = image.to_texture
+
 $map = $tilemap.generate_from('./assets/map.csv').to_texture
+
+
+## TODO
+# Character
+#   - Movement
+#   - Interaction
+#
+# Map
+#   - Scrolling
+#
+# Sound
+#   - Sounds
+#   - Background music
+#
+# Input System
+#
+# Health system
+#
+# Ending
+#
+# Intro
+
+$scene_manager = SceneManager.new(TaylorSplash.new)
+$scene_manager = SceneManager.new(Main.new)
+
+$data = {
+  health: 10
+}
 
 # Define your main method
 def main
@@ -27,12 +65,11 @@ def main
   delta = get_frame_time
 
   # Your update logic goes here
+  $scene_manager.update(delta)
 
   drawing do
     # Your drawing logic goes here
-
-    clear
-    $map.draw
+    $scene_manager.render
   end
 end
 
