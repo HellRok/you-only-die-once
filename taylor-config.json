@@ -1,0 +1,19 @@
+{
+  "name": "you-only-die-once",
+  "version": "v0.0.1",
+  "input": "game.rb",
+  "export_directory": "./exports",
+  "export_targets": [
+    "linux",
+    "windows",
+    "osx",
+    "web"
+  ],
+  "load_paths": [
+    "./",
+    "./vendor"
+  ],
+  "copy_paths": [
+    "./assets"
+  ]
+}

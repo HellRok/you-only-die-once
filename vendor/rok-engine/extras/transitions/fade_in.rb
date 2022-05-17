@@ -1,0 +1,2 @@
+class FadeIn < Fade
+end
