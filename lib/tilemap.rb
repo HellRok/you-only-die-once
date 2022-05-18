@@ -25,7 +25,7 @@ class Tilemap
     @width = ids.first.size
     @height = ids.size
 
-    map = Image.generate(width: @width * 18, height: @height * 18, colour: BLUE)
+    map = Image.generate(width: @width * @size, height: @height * @size, colour: BLUE)
 
     ids.each.with_index { |row, y|
       row.each.with_index { |id, x|

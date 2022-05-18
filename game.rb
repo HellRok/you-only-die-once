@@ -4,12 +4,17 @@ $: << './vendor'
 require 'rok-engine/core'
 require 'rok-engine/extras'
 
+require 'lib/helpers'
+require 'lib/input'
 require 'lib/tilemap'
 
 require 'nodes/health'
+require 'nodes/player'
 
 require 'scenes/taylor_splash'
 require 'scenes/main'
+
+seed_rand
 
 # Open up a window
 init_window(640, 480, "You Only Die Once")
@@ -20,18 +25,20 @@ init_audio_device
 # Get the current monitor frame rate and set our target framerate to match.
 set_target_fps(get_monitor_refresh_rate(get_current_monitor))
 
-image = Image.load('./assets/tilemap.png').resize!(width: 272 * 2, height: 128 * 2)
+image = Image.load('./assets/tilemap.png').tap { |image|
+  image.resize!(width: image.width * 2, height: image.height * 2)
+}
 $resources = ResourceManager.new
 $tilemap = Tilemap.new(
   image: image,
   size: 32
 )
 
+$input = Input.new
+
 $tiles = image.to_texture
-#$tiles = image.copy.replace!(WHITE, Colour.new(255, 0, 255, 0)).to_texture
 
 $map = $tilemap.generate_from('./assets/map.csv').to_texture
-
 
 ## TODO
 # Character
