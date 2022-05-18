@@ -38,6 +38,8 @@ class Main
       0,
       1
     )
+
+    update_camera(0)
   end
 
   def draw

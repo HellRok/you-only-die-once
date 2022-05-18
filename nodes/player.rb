@@ -19,7 +19,7 @@ class Player
       32 * 10, 32 * 8,
       32, 32
     )
-    @tile_position = Vector2::ZERO
+    @tile_position = Vector2.new(0, 0)
     start_idling
     add_child Delay.new(length: 0.3) { toggle_sprite }
   end
