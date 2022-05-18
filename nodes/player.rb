@@ -16,7 +16,7 @@ class Player
   def initialize
     @player_tile = coin_flip ? 121 : 122
     @destination = Rectangle.new(
-      320, 240, # Centre of the screen
+      32 * 10, 32 * 8,
       32, 32
     )
     @tile_position = Vector2::ZERO

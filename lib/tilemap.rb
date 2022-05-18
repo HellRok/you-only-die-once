@@ -18,10 +18,7 @@ class Tilemap
     Rectangle.new(x * @size, y * @size, @size, @size)
   end
 
-  def generate_from(csv)
-    start_time = Time.now
-    ids = File.read(csv).each_line.map { |line| line.split(',').map(&:to_i) }
-
+  def generate_from(ids)
     @width = ids.first.size
     @height = ids.size
 
@@ -38,8 +35,6 @@ class Tilemap
         end
       }
     }
-
-    puts "INFO: Generated map from #{csv} in #{Time.now - start_time} seconds"
 
     map
   end

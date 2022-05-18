@@ -29,6 +29,7 @@ image = Image.load('./assets/tilemap.png').tap { |image|
   image.resize!(width: image.width * 2, height: image.height * 2)
 }
 $resources = ResourceManager.new
+
 $tilemap = Tilemap.new(
   image: image,
   size: 32
@@ -38,7 +39,8 @@ $input = Input.new
 
 $tiles = image.to_texture
 
-$map = $tilemap.generate_from('./assets/map.csv').to_texture
+$map_data = File.read('./assets/map.csv').each_line.map { |line| line.split(',').map(&:to_i) }
+$map = $tilemap.generate_from($map_data).to_texture
 
 ## TODO
 # Character
