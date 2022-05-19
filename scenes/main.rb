@@ -61,18 +61,30 @@ class Main
           @player.move(:left)
           add_child Delay.new(length: 0.3) { $input.clear_down(:left) }
         end
+
       elsif $input.right_down?
-        if WALKABLE_TILES.include? tile(:right)
+        if INTERACTION_TILES[tile_position(:right)]
+          @player.start_interacting
+          add_child INTERACTION_TILES[tile_position(:right)].new
+        elsif WALKABLE_TILES.include? tile(:right)
           @player.move(:right)
           add_child Delay.new(length: 0.3) { $input.clear_down(:right) }
         end
+
       elsif $input.up_down?
-        if WALKABLE_TILES.include? tile(:up)
+        if INTERACTION_TILES[tile_position(:up)]
+          @player.start_interacting
+          add_child INTERACTION_TILES[tile_position(:up)].new
+        elsif WALKABLE_TILES.include? tile(:up)
           @player.move(:up)
           add_child Delay.new(length: 0.3) { $input.clear_down(:up) }
         end
+
       elsif $input.down_down?
-        if WALKABLE_TILES.include? tile(:down)
+        if INTERACTION_TILES[tile_position(:down)]
+          @player.start_interacting
+          add_child INTERACTION_TILES[tile_position(:down)].new
+        elsif WALKABLE_TILES.include? tile(:down)
           @player.move(:down)
           add_child Delay.new(length: 0.3) { $input.clear_down(:down) }
         end
