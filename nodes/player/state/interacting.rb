@@ -1,6 +1,6 @@
 class Player
   class State
-    class Idle
+    class Interacting
       include Node
 
       def initialize(parent)

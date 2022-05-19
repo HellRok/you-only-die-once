@@ -1,4 +1,5 @@
 require 'nodes/player/state/idle'
+require 'nodes/player/state/interacting'
 require 'nodes/player/state/moving'
 
 class Player
@@ -7,6 +8,7 @@ class Player
   state_machine(
     states: {
       idle: Player::State::Idle,
+      interacting: Player::State::Interacting,
       moving: Player::State::Moving,
     }
   )
@@ -43,6 +45,10 @@ class Player
 
   def start_idling
     transition_to :idle, self
+  end
+
+  def start_interacting
+    transition_to :interacting, self
   end
 
   def move(direction)

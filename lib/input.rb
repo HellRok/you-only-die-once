@@ -1,7 +1,9 @@
+# TODO: This is actually a super useful class, just got to clean up the naming
+# convention and make it a bit more meta-programmed for easy integration.
 class Input
   include Node
 
-  attr_reader :pressed
+  attr_reader :down
 
   def initialize
     @keys = {
@@ -42,11 +44,27 @@ class Input
       },
     }
 
-    @pressed = Hash.new(false)
+    clear_all_down
   end
 
   def update(_)
     check_keys
+  end
+
+  def left_down?
+    was_down? :left
+  end
+
+  def right_down?
+    was_down? :right
+  end
+
+  def up_down?
+    was_down? :up
+  end
+
+  def down_down?
+    was_down? :down
   end
 
   def left_pressed?
@@ -62,26 +80,36 @@ class Input
   end
 
   def down_pressed?
-    was_pressed? :down
+    was_pressed? :pressed
   end
 
-  def clear_pressed(direction)
-    @pressed[direction] = false
+  def clear_all_down
+    @down = Hash.new(false)
+  end
+
+  def clear_down(direction)
+    @down[direction] = false
   end
 
   private
-  def was_pressed?(input)
-    if @pressed[input]
-      @pressed[input] = false
+  def was_down?(input)
+    if @down[input]
+      @down[input] = false
       return true
     end
 
     return false
   end
 
+  def was_pressed?(input)
+    check_keyboard_pressed(@keys[input][:keys]) ||
+      check_gestures(@keys[input][:gestures]) ||
+      check_gamepad_pressed(@keys[input][:buttons])
+  end
+
   def check_keys
     @keys.each { |input, inputs|
-      @pressed[input] = true if check_keyboard(inputs[:keys]) ||
+      @down[input] = true if check_keyboard(inputs[:keys]) ||
         check_gestures(inputs[:gestures]) ||
         check_gamepad(inputs[:buttons])
     }
@@ -94,8 +122,16 @@ class Input
   def check_gestures(gestures)
     gestures.include? get_gesture_detected
   end
-  
+
   def check_gamepad(buttons)
+    buttons.any? { gamepad_button_down? 0, _1 }
+  end
+
+  def check_keyboard_pressed(keys)
+    keys.any? { key_pressed? _1 }
+  end
+
+  def check_gamepad_pressed(buttons)
     buttons.any? { gamepad_button_pressed? 0, _1 }
   end
 end

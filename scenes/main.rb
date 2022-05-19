@@ -8,9 +8,14 @@ WALKABLE_TILES = [
   102, 103, 104,
 ]
 
+INTERACTION_TILES = {
+  '11x10' => Interaction::Therapist,
+}
+
 class Main
   include Scene
 
+  attr_accessor :player, :hud
   def setup
     @health = Health.new
 
@@ -26,6 +31,8 @@ class Main
       1
     )
 
+    @hud = []
+
     update_camera(0)
   end
 
@@ -36,33 +43,38 @@ class Main
       super
     }
     @health.draw
+    @hud.each(&:draw)
     draw_fps(20, 20)
   end
 
   def update(delta)
     $input.update(delta)
     @health.update(delta)
+    @hud.each { _1.update(delta) }
 
     if @player.idle?
-      if $input.left_pressed?
-        if WALKABLE_TILES.include? tile(:left)
+      if $input.left_down?
+        if INTERACTION_TILES[tile_position(:left)]
+          @player.start_interacting
+          add_child INTERACTION_TILES[tile_position(:left)].new
+        elsif WALKABLE_TILES.include? tile(:left)
           @player.move(:left)
-          add_child Delay.new(length: 0.3) { $input.clear_pressed(:left) }
+          add_child Delay.new(length: 0.3) { $input.clear_down(:left) }
         end
-      elsif $input.right_pressed?
+      elsif $input.right_down?
         if WALKABLE_TILES.include? tile(:right)
           @player.move(:right)
-          add_child Delay.new(length: 0.3) { $input.clear_pressed(:right) }
+          add_child Delay.new(length: 0.3) { $input.clear_down(:right) }
         end
-      elsif $input.up_pressed?
+      elsif $input.up_down?
         if WALKABLE_TILES.include? tile(:up)
           @player.move(:up)
-          add_child Delay.new(length: 0.3) { $input.clear_pressed(:up) }
+          add_child Delay.new(length: 0.3) { $input.clear_down(:up) }
         end
-      elsif $input.down_pressed?
+      elsif $input.down_down?
         if WALKABLE_TILES.include? tile(:down)
           @player.move(:down)
-          add_child Delay.new(length: 0.3) { $input.clear_pressed(:down) }
+          add_child Delay.new(length: 0.3) { $input.clear_down(:down) }
         end
       end
     end
@@ -98,9 +110,24 @@ class Main
       y += 1
     end
 
-
-    puts "X: #{x} Y: #{y}"
-    puts $map_data[y][x]
     $map_data[y][x]
+  end
+
+  def tile_position(direction)
+    x = @player.tile_position.x.to_i
+    y = @player.tile_position.y.to_i
+
+    case direction
+    when :left
+      x -= 1
+    when :right
+      x += 1
+    when :up
+      y -= 1
+    when :down
+      y += 1
+    end
+
+    "#{x}x#{y}"
   end
 end

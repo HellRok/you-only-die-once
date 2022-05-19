@@ -8,8 +8,11 @@ require 'lib/helpers'
 require 'lib/input'
 require 'lib/tilemap'
 
+require 'nodes/confirm'
 require 'nodes/health'
+require 'nodes/interaction/therapist'
 require 'nodes/player'
+require 'nodes/text_box'
 
 require 'scenes/taylor_splash'
 require 'scenes/main'
@@ -34,6 +37,9 @@ $tilemap = Tilemap.new(
   image: image,
   size: 32
 )
+
+$font_size = 32
+$font = Font.load('./assets/kenney_pixel.ttf', size: $font_size)
 
 $input = Input.new
 
@@ -65,9 +71,8 @@ $map = $tilemap.generate_from($map_data).to_texture
 $scene_manager = SceneManager.new(TaylorSplash.new)
 $scene_manager = SceneManager.new(Main.new)
 
-$data = {
-  health: 10
-}
+$data = Hash.new(0)
+$data[:health] = 10
 
 # Define your main method
 def main
