@@ -21,11 +21,15 @@ class Interaction
     end
 
     def display_text_box
-      @text_box = TextBox.new(<<-STR) { have_therapy }
-                             Hello there
-                               this is some text
-                                 like this
-                             STR
+      @text_box = TextBox.new(
+        [
+          'Hello there',
+          'this is some text',
+          'like this',
+          'like this',
+          'like this',
+        ]
+      ) { have_therapy }
       scene.hud << @text_box
     end
 

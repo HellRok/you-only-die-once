@@ -49,8 +49,8 @@ class Main
 
   def update(delta)
     $input.update(delta)
-    @health.update(delta)
-    @hud.each { _1.update(delta) }
+    @health.tick(delta)
+    @hud.each { _1.tick(delta) }
 
     if @player.idle?
       if $input.left_down?
