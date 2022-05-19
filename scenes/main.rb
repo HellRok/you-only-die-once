@@ -1,24 +1,11 @@
 WALKABLE_TILES = [
   0,
-  17,
-  19,
+  17, 19,
   34,
   51,
-  68,
-  69,
-  70,
-  71,
-  72,
-  73,
-  74,
-  85,
-  86,
-  87,
-  88,
-  89,
-  102,
-  103,
-  104,
+  68, 69, 70, 71, 72, 73, 74,
+  85, 86, 87, 88, 89,
+  102, 103, 104,
 ]
 
 class Main
@@ -90,7 +77,7 @@ class Main
       @camera.target.x = @player.destination.x + 16
     end
 
-    if @player.destination.y >= 240 - 32 &&
+    if @player.destination.y >= 240 - 16 &&
         @player.destination.y <= ($map.height - 240 - 32)
       @camera.target.y = @player.destination.y + 16
     end
