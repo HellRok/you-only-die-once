@@ -9,7 +9,25 @@ WALKABLE_TILES = [
 ]
 
 INTERACTION_TILES = {
+  '20x-1' => Interaction::Travel,
+  '21x-1' => Interaction::Travel,
+  '22x-1' => Interaction::Travel,
+  '23x-1' => Interaction::Travel,
+
+  '5x1' => Interaction::Sign,
+
+  '3x16' => Interaction::Grave,
   '11x10' => Interaction::Therapist,
+  '15x12' => Interaction::Bar,
+  '12x15' => Interaction::Home,
+  '10x20' => Interaction::Friend,
+  '15x20' => Interaction::Church,
+
+  '27x1' => Interaction::Cave,
+  '35x1' => Interaction::Pot,
+  '47x1' => Interaction::OtherGrave,
+  '44x26' => Interaction::Treasure,
+
   '24x15' => Interaction::Cactus,
   '30x16' => Interaction::Cactus,
   '26x19' => Interaction::Cactus,
