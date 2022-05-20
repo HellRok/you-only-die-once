@@ -8,7 +8,10 @@ class TextBox
 
     count = 0
     text_lines.each { |line|
-      add_child Delay.new(length: 0.5 * count) { @text += "#{line}\n" }
+      add_child Delay.new(length: 0.5 * count) {
+        @text += "#{line}\n"
+        $sounds.play :chatter
+      }
       count += 1
     }
 

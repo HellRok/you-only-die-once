@@ -13,7 +13,7 @@ class Confirm
 
     @text_position = Vector2.new(
       @rectangle.x + ((@rectangle.width - text_width(@text)) / 2),
-      @rectangle.y + ((@rectangle.height - $font_size) / 2)
+      @rectangle.y + ((@rectangle.height - $font_size) / 2) - 32
     )
 
     # TODO: Make this actually evenly spaced, I'm pretty sure they aren't right now
@@ -26,7 +26,9 @@ class Confirm
       @rectangle.y + ((@rectangle.height - $font_size) / 2) + 64
     )
 
+    @made_selection = false
     @selected = :no
+    @last_selected = :no
     @selected_position = Vector2.new(
       @rectangle.x + 320 - 24,
       @rectangle.y + ((@rectangle.height - $font_size) / 2) + 64
@@ -34,14 +36,23 @@ class Confirm
   end
 
   def update(delta)
+    return if @made_selection
+
     if $input.up_pressed?
-      @block.call(@selected == :yes)
+      $sounds.play(:select)
+      @made_selection = true
+      add_child Delay.new(length: 0.2) { @block.call(@selected == :yes) }
     elsif $input.left_pressed?
       @selected = :yes
       @selected_position.x = 216
     elsif $input.right_pressed?
       @selected = :no
       @selected_position.x = 336
+    end
+
+    if @last_selected != @selected
+      $sounds.play(:select)
+      @last_selected = @selected
     end
   end
 

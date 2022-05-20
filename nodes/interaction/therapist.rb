@@ -3,7 +3,7 @@ class Interaction
     include Node
 
     def initialize
-      @text = 'Spend some time with a therapist?'
+      @text = 'Spend some time with the therapist?'
     end
 
     def add_child_callback
@@ -36,7 +36,6 @@ class Interaction
     def have_therapy
       scene.hud.delete(@text_box)
       $data[:therapy] += 1
-      puts $data
       clean_up
     end
 

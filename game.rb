@@ -6,14 +6,18 @@ require 'rok-engine/extras'
 
 require 'lib/helpers'
 require 'lib/input'
+require 'lib/play_checker'
+require 'lib/sound_manager'
 require 'lib/tilemap'
 
 require 'nodes/confirm'
 require 'nodes/health'
+require 'nodes/interaction/cactus'
 require 'nodes/interaction/therapist'
 require 'nodes/player'
 require 'nodes/text_box'
 
+require 'scenes/already_played'
 require 'scenes/taylor_splash'
 require 'scenes/main'
 
@@ -45,6 +49,8 @@ $input = Input.new
 
 $tiles = image.to_texture
 
+$sounds = SoundManager.new
+
 $map_data = File.read('./assets/map.csv').each_line.map { |line| line.split(',').map(&:to_i) }
 $map = $tilemap.generate_from($map_data).to_texture
 
@@ -58,6 +64,11 @@ $map = $tilemap.generate_from($map_data).to_texture
 #
 # Sound
 #   - Sounds
+#     - Bonk
+#     - Change selection
+#     - Select
+#     - Cactus
+#     - Talking
 #   - Background music
 #
 # Input System
@@ -67,12 +78,19 @@ $map = $tilemap.generate_from($map_data).to_texture
 # Ending
 #
 # Intro
-
-$scene_manager = SceneManager.new(TaylorSplash.new)
-$scene_manager = SceneManager.new(Main.new)
+#
+# Single play system
 
 $data = Hash.new(0)
 $data[:health] = 10
+
+
+if PlayChecker.played?
+  $scene_manager = SceneManager.new(AlreadyPlayed.new)
+else
+  $scene_manager = SceneManager.new(TaylorSplash.new)
+  $scene_manager = SceneManager.new(Main.new)
+end
 
 # Define your main method
 def main

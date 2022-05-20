@@ -10,6 +10,17 @@ WALKABLE_TILES = [
 
 INTERACTION_TILES = {
   '11x10' => Interaction::Therapist,
+  '24x15' => Interaction::Cactus,
+  '30x16' => Interaction::Cactus,
+  '26x19' => Interaction::Cactus,
+  '32x19' => Interaction::Cactus,
+  '40x19' => Interaction::Cactus,
+  '31x23' => Interaction::Cactus,
+  '41x23' => Interaction::Cactus,
+  '24x25' => Interaction::Cactus,
+  '13x26' => Interaction::Cactus,
+  '42x26' => Interaction::Cactus,
+  '32x28' => Interaction::Cactus,
 }
 
 class Main
@@ -32,8 +43,12 @@ class Main
     )
 
     @hud = []
+    @bonking = false
 
     update_camera(0)
+
+    $sounds.background_music.play
+    $sounds.background_music.volume = 0.3
   end
 
   def draw
@@ -48,6 +63,7 @@ class Main
   end
 
   def update(delta)
+    $sounds.tick(delta)
     $input.update(delta)
     @health.tick(delta)
     @hud.each { _1.tick(delta) }
@@ -60,6 +76,8 @@ class Main
         elsif WALKABLE_TILES.include? tile(:left)
           @player.move(:left)
           add_child Delay.new(length: 0.3) { $input.clear_down(:left) }
+        else
+          bonk
         end
 
       elsif $input.right_down?
@@ -69,6 +87,8 @@ class Main
         elsif WALKABLE_TILES.include? tile(:right)
           @player.move(:right)
           add_child Delay.new(length: 0.3) { $input.clear_down(:right) }
+        else
+          bonk
         end
 
       elsif $input.up_down?
@@ -78,6 +98,8 @@ class Main
         elsif WALKABLE_TILES.include? tile(:up)
           @player.move(:up)
           add_child Delay.new(length: 0.3) { $input.clear_down(:up) }
+        else
+          bonk
         end
 
       elsif $input.down_down?
@@ -87,6 +109,8 @@ class Main
         elsif WALKABLE_TILES.include? tile(:down)
           @player.move(:down)
           add_child Delay.new(length: 0.3) { $input.clear_down(:down) }
+        else
+          bonk
         end
       end
     end
@@ -141,5 +165,13 @@ class Main
     end
 
     "#{x}x#{y}"
+  end
+
+  def bonk
+    unless @bonking
+      $sounds.play(:bonk)
+      add_child Delay.new(length: 0.5) { @bonking = false }
+      @bonking = true
+    end
   end
 end
