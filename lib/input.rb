@@ -12,7 +12,6 @@ class Input
         gestures: [GESTURE_SWIPE_LEFT],
         buttons: [
           GAMEPAD_BUTTON_LEFT_FACE_LEFT,
-          GAMEPAD_BUTTON_RIGHT_FACE_LEFT,
         ]
       },
 
@@ -21,7 +20,6 @@ class Input
         gestures: [GESTURE_SWIPE_RIGHT],
         buttons: [
           GAMEPAD_BUTTON_LEFT_FACE_RIGHT,
-          GAMEPAD_BUTTON_RIGHT_FACE_RIGHT,
         ]
       },
 
@@ -30,7 +28,6 @@ class Input
         gestures: [GESTURE_SWIPE_UP],
         buttons: [
           GAMEPAD_BUTTON_LEFT_FACE_UP,
-          GAMEPAD_BUTTON_RIGHT_FACE_UP,
         ]
       },
 
@@ -39,6 +36,13 @@ class Input
         gestures: [GESTURE_SWIPE_DOWN],
         buttons: [
           GAMEPAD_BUTTON_LEFT_FACE_DOWN,
+        ]
+      },
+
+      action: {
+        keys: [KEY_SPACE],
+        gestures: [GESTURE_TAP],
+        buttons: [
           GAMEPAD_BUTTON_RIGHT_FACE_DOWN,
         ]
       },
@@ -81,6 +85,10 @@ class Input
 
   def down_pressed?
     was_pressed? :pressed
+  end
+
+  def action_pressed?
+    was_pressed? :action
   end
 
   def clear_all_down

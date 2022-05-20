@@ -38,7 +38,7 @@ class Confirm
   def update(delta)
     return if @made_selection
 
-    if $input.up_pressed?
+    if $input.action_pressed?
       $sounds.play(:select)
       @made_selection = true
       add_child Delay.new(length: 0.2) { @block.call(@selected == :yes) }

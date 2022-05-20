@@ -30,7 +30,7 @@ class TextBox
   end
 
   def update(delta)
-    @block.call if $input.up_pressed? && @all_done
+    @block.call if $input.action_pressed? && @all_done
   end
 
   def render
