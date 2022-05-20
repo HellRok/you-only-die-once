@@ -21,15 +21,35 @@ class Interaction
     end
 
     def display_text_box
-      @text_box = TextBox.new(
-        [
-          'Hello there',
-          'this is some text',
-          'like this',
-          'like this',
-          'like this',
+      if $data[:therapy] == 0
+        text = [
+          'You have a great session.',
+          'The feeling of loneliness you had is',
+          'starting to fade.',
         ]
-      ) { have_therapy }
+      elsif $data[:therapy] == 1
+        text = [
+          'Another wonderful session.',
+          'You\'re really starting to understand',
+          'that your partner wanted you to live',
+          'your life still.',
+        ]
+      elsif $data[:therapy] == 2
+        text = [
+          'This was an amazing session.',
+          'You feel a though you could take on',
+          'the world!',
+          'The grieving of your partner feels',
+          'complete.',
+        ]
+      else
+        text = [
+          'You have another session.',
+          'You discuss your minor issues and',
+          'feel a little better.'
+        ]
+      end
+      @text_box = TextBox.new(text) { have_therapy }
       scene.hud << @text_box
     end
 
