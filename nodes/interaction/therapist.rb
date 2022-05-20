@@ -36,6 +36,7 @@ class Interaction
     def have_therapy
       scene.hud.delete(@text_box)
       $data[:therapy] += 1
+      scene.health.decrement
       clean_up
     end
 

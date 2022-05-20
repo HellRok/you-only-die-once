@@ -7,15 +7,46 @@ class Health
 
   def initialize
     @cursor = Rectangle.new(0, 0, 32, 32)
+    @colour = Colour.new(255, 255, 255, 255)
+    @flashing = :no
+    @counter = 0.0
+  end
+
+  def update(delta)
+    case @flashing
+    when :down
+      @counter += 128 * delta
+      if @counter >= 1
+        @colour.blue -= 1
+        @colour.green -= 1
+        @counter = 0
+      end
+      @flashing = :up if @colour.blue <= 128
+
+    when :up
+      @counter += 128 * delta
+      if @counter >= 1
+        @colour.blue += 1
+        @colour.green += 1
+        @counter = 0
+      end
+      @flashing = :no if @colour.blue >= 255
+    end
   end
 
   def render
     5.times { |index|
       $tiles.draw(
         destination: position_at(index),
-        source: $tilemap.tile_for(health_at(index))
+        source: $tilemap.tile_for(health_at(index)),
+        colour: @colour
       )
     }
+  end
+
+  def decrement
+    $data[:health] -= 1
+    @flashing = :down
   end
 
   private

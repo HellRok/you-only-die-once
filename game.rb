@@ -84,7 +84,6 @@ $map = $tilemap.generate_from($map_data).to_texture
 $data = Hash.new(0)
 $data[:health] = 10
 
-
 if PlayChecker.played?
   $scene_manager = SceneManager.new(AlreadyPlayed.new)
 else

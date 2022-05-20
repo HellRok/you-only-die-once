@@ -26,7 +26,7 @@ INTERACTION_TILES = {
 class Main
   include Scene
 
-  attr_accessor :player, :hud
+  attr_accessor :player, :hud, :health
   def setup
     @health = Health.new
 
