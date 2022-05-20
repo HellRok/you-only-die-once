@@ -21,7 +21,15 @@ class Interaction
     end
 
     def display_text_box
-      if $data[:therapy] == 0
+      if $data[:scared_of_cave]
+        text = [
+          'You have a break through session.',
+          'The therapist has helped you overcome',
+          'your fear of caves!',
+          'You feel you could spelunk again!'
+        ]
+        $data[:scared_of_cave] = false
+      elsif $data[:therapy] == 0
         text = [
           'You have a great session.',
           'The feeling of loneliness you had is',

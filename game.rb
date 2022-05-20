@@ -94,6 +94,7 @@ $map = $tilemap.generate_from($map_data).to_texture
 
 $data = Hash.new(0)
 $data[:health] = 10
+$data[:scared_of_cave] = false
 
 if PlayChecker.played?
   $scene_manager = SceneManager.new(AlreadyPlayed.new)
