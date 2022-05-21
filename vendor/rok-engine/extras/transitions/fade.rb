@@ -1,7 +1,7 @@
 class Fade
   include Node
 
-  attr_reader :duration, :timer
+  attr_reader :duration, :timer, :rectangle
 
   def initialize(duration, &block)
     raise 'must specify callback' unless block_given?

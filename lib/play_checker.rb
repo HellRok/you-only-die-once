@@ -31,4 +31,25 @@ class PlayChecker
   def self.file_name
     "delete_if_you_#{FILE_NAMES.sample}"
   end
+
+  def self.load_data
+    partial = FILE_NAMES.detect { |file|
+      if browser?
+        local_storage_get_item("delete_if_you_#{file}") != ''
+      else
+        File.exist? "delete_if_you_#{file}"
+      end
+    }
+
+    if browser?
+      data = JSON.parse(local_storage_get_item("delete_if_you_#{partial}"))
+    else
+      data = JSON.parse(File.read("delete_if_you_#{partial}"))
+    end
+
+    # If we don't do this, we lose the Hash.new(0) setup
+    data.keys.each { |key|
+      $data[key.to_sym] = data[key]
+    }
+  end
 end

@@ -1,4 +1,4 @@
-DEBUG = true
+DEBUG = false
 
 # Add the path ./vendor so we can easily require third party libraries.
 $: << './vendor'
@@ -27,13 +27,15 @@ require 'nodes/interaction/sign'
 require 'nodes/interaction/therapist'
 require 'nodes/interaction/travel'
 require 'nodes/interaction/treasure'
+require 'nodes/npc'
 require 'nodes/player'
 require 'nodes/text_box'
 
 require 'scenes/already_played'
+require 'scenes/funeral'
 require 'scenes/intro'
-require 'scenes/taylor_splash'
 require 'scenes/main'
+require 'scenes/taylor_splash'
 
 seed_rand
 
@@ -100,6 +102,7 @@ $data[:health] = 10
 $data[:drunk_potion] = false
 $data[:cheated] = false
 $data[:four_chan] = false
+$data[:ghost_at_funeral] = false
 $data[:got_laid] = false
 $data[:scared_of_cave] = false
 $data[:visited_church_archive] = false

@@ -88,6 +88,8 @@ class Main
   end
 
   def update(delta)
+    start_funeral if $data[:health] <= 0
+
     $sounds.tick(delta)
     $input.update(delta)
     @health.tick(delta)
@@ -198,5 +200,18 @@ class Main
       add_child Delay.new(length: 0.5) { @bonking = false }
       @bonking = true
     end
+  end
+
+  def start_funeral
+    @player.start_interacting
+    fade = FadeOut.new(2) {
+      $sounds.background_music.stop
+      $scene_manager.switch_to(Funeral.new)
+    }
+
+    fade.rectangle.x = @camera.target.x - 320
+    fade.rectangle.y = @camera.target.y - 240
+
+    add_child fade
   end
 end

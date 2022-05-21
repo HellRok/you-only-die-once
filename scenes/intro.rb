@@ -26,6 +26,15 @@ class Intro
       'WASD/arrow keys on keyboard',
       'Swipe on phone',
       'Dpad on controller',
+    ]) { only_once_text }
+  end
+
+  def only_once_text
+    @children = []
+    add_child TextBox.new([
+      'You can only play this game once!',
+      'Make sure every action you take',
+      'is one you can commit to.',
     ]) { story_text }
   end
 

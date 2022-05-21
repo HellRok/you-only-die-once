@@ -5,6 +5,7 @@ require 'nodes/player/state/moving'
 class Player
   include Node
   include StateMachine
+
   state_machine(
     states: {
       idle: Player::State::Idle,
@@ -12,7 +13,6 @@ class Player
       moving: Player::State::Moving,
     }
   )
-
 
   attr_accessor :destination, :player_tile
   def initialize

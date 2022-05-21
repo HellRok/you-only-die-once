@@ -4,7 +4,9 @@ class AlreadyPlayed
   def setup
     confirm = Confirm.new("You've already played!\n See your funeral again?") { |result|
       if result
-        puts "YO"
+        add_child(FadeOut.new(0.5) {
+          $scene_manager.switch_to(Funeral.new)
+        })
       else
         exit
       end
