@@ -3,37 +3,24 @@ class Interaction
     include Node
 
     def initialize
-      @text = 'Sign'
     end
 
     def add_child_callback
-      confirm = Confirm.new(@text) { |result|
-        if result
-          display_text_box
-        else
-          clean_up
-        end
-        scene.hud.delete(confirm)
-      }
-      scene.hud << confirm
+      display_text_box
     end
 
     def display_text_box
-      @text_box = TextBox.new(
-        [
-          'Hello there',
-          'this is some text',
-          'like this',
-          'like this',
-          'like this',
-        ]
-      ) { have_therapy }
+      @text_box = TextBox.new([
+        'Hey!',
+        'You shouldn\'t be here!',
+        'You must have cheated!',
+      ]) { read_sign }
       scene.hud << @text_box
     end
 
-    def have_therapy
+    def read_sign
       scene.hud.delete(@text_box)
-      $data[:therapy] += 1
+      $data[:cheated] = true
       scene.health.decrement
       clean_up
     end

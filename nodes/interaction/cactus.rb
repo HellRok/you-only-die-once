@@ -3,7 +3,6 @@ class Interaction
     include Node
 
     def initialize
-      @text = 'Spend some time with the therapist?'
     end
 
     def add_child_callback
