@@ -7,7 +7,7 @@ class TaylorSplash
 
     add_child(Delay.new(length: 3) {
       add_child(FadeOut.new(0.5) {
-        $scene_manager.switch_to(Main.new)
+        $scene_manager.switch_to(Intro.new)
       })
     })
   end

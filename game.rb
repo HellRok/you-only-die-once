@@ -31,6 +31,7 @@ require 'nodes/player'
 require 'nodes/text_box'
 
 require 'scenes/already_played'
+require 'scenes/intro'
 require 'scenes/taylor_splash'
 require 'scenes/main'
 
@@ -107,7 +108,6 @@ if PlayChecker.played?
   $scene_manager = SceneManager.new(AlreadyPlayed.new)
 else
   $scene_manager = SceneManager.new(TaylorSplash.new)
-  $scene_manager = SceneManager.new(Main.new)
 end
 
 # Define your main method
