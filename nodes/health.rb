@@ -35,7 +35,7 @@ class Health
   end
 
   def render
-    ($data[:health] > 10 ? 6 : 5).times { |index|
+    ([($data[:health] / 2.0).ceil, 5].max).times { |index|
       $tiles.draw(
         destination: position_at(index),
         source: $tilemap.tile_for(health_at(index)),

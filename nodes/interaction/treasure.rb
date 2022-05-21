@@ -3,10 +3,15 @@ class Interaction
     include Node
 
     def initialize
-      @text = 'Treasure'
+      @text = 'You find a mysterious potion, drink it?'
     end
 
     def add_child_callback
+      if $data[:drunk_potion]
+        display_text_box
+        return
+      end
+
       confirm = Confirm.new(@text) { |result|
         if result
           display_text_box
@@ -19,22 +24,25 @@ class Interaction
     end
 
     def display_text_box
-      @text_box = TextBox.new(
-        [
-          'Hello there',
-          'this is some text',
-          'like this',
-          'like this',
-          'like this',
+      if $data[:drunk_potion]
+        text = [
+          'There\'s nothing left in the chest.'
         ]
-      ) { have_therapy }
+      else
+        text = [
+          'You guzzle down the potion and feel',
+          'fantastic!'
+        ]
+        scene.health.decrement
+        $data[:health] += 3
+      end
+      @text_box = TextBox.new(text) { do_treasure }
       scene.hud << @text_box
     end
 
-    def have_therapy
+    def do_treasure
       scene.hud.delete(@text_box)
-      $data[:therapy] += 1
-      scene.health.decrement
+      $data[:drunk_potion] = true
       clean_up
     end
 
