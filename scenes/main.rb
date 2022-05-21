@@ -77,7 +77,13 @@ class Main
     }
     @health.draw
     @hud.each(&:draw)
-    draw_fps(20, 20)
+    if DEBUG
+      draw_fps(20, 20)
+      $font.draw(
+        JSON.generate($data, { pretty_print: true, indent_width: 2 }),
+        colour: RED
+      )
+    end
   end
 
   def update(delta)

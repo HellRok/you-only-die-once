@@ -30,7 +30,6 @@ class SoundManager
   def play(sound)
     @sounds[sound].pitch = 0.75 + (rand * 0.5)
     @sounds[sound].volume = 0.5 + (rand * 0.15)
-    puts "Pitch: #{@sounds[sound].pitch} Volume: #{@sounds[sound].volume}"
     # TODO: Pitch doesn't work without multi: false ????
     @sounds[sound].play(multi: false)
   end

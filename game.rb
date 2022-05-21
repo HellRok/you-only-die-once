@@ -1,3 +1,5 @@
+DEBUG = true
+
 # Add the path ./vendor so we can easily require third party libraries.
 $: << './vendor'
 
@@ -96,6 +98,7 @@ $data = Hash.new(0)
 $data[:health] = 10
 $data[:scared_of_cave] = false
 $data[:got_laid] = false
+$data[:four_chan] = false
 
 if PlayChecker.played?
   $scene_manager = SceneManager.new(AlreadyPlayed.new)

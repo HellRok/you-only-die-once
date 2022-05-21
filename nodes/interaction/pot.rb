@@ -8,8 +8,6 @@ class Interaction
 
     def add_child_callback
       confirm = Confirm.new(@text) { |result|
-        puts "You selected #{result ? 'Yes' : 'No'}"
-
         if result
           display_text_box
         else

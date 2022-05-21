@@ -11,8 +11,6 @@ class Interaction
         display_text_box
       else
         confirm = Confirm.new(@text) { |result|
-          puts "You selected #{result ? 'Yes' : 'No'}"
-
           if result
             display_text_box
           else

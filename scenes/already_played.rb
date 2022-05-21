@@ -3,8 +3,6 @@ class AlreadyPlayed
 
   def setup
     confirm = Confirm.new("You've already played!\n See your funeral again?") { |result|
-      puts "You selected #{result ? 'Yes' : 'No'}"
-
       if result
         puts "YO"
       else
