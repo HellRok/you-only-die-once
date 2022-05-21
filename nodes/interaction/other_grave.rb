@@ -3,7 +3,9 @@ class Interaction
     include Node
 
     def initialize
-      @text = 'OtherGrave'
+      @text = 'Visit the mysterious grave?'
+      @skip_decrement = false
+      @skip_increment = false
     end
 
     def add_child_callback
@@ -19,22 +21,44 @@ class Interaction
     end
 
     def display_text_box
-      @text_box = TextBox.new(
-        [
-          'Hello there',
-          'this is some text',
-          'like this',
-          'like this',
-          'like this',
+      if $data[:mysterious_grave] == 1 && !$data[:visited_church_archive]
+        text = [
+          'You need to visit the church to find',
+          'out more.',
         ]
-      ) { have_therapy }
+        @skip_decrement = true
+        @skip_increment = true
+      elsif $data[:mysterious_grave] == 0
+        text = [
+          'You clear away some grime from the',
+          'base of the grave and can read the',
+          'name "Jade".',
+          'You feel you can find out more',
+          'from the church archives.',
+        ]
+      elsif $data[:mysterious_grave] == 1
+        text = [
+          'Having learnt from the archives what',
+          'happened you give a proper ceremony',
+          'to Jade.',
+          'You feel as though a spirit has left',
+          'and is finally at rest.',
+        ]
+      else
+        text = [
+          'There is no longer an ominous',
+          'feeling emanating from this grave.',
+        ]
+        @skip_decrement
+      end
+      @text_box = TextBox.new(text) { visit_mysterious_grave }
       scene.hud << @text_box
     end
 
-    def have_therapy
+    def visit_mysterious_grave
       scene.hud.delete(@text_box)
-      $data[:therapy] += 1
-      scene.health.decrement
+      $data[:mysterious_grave] += 1 unless @skip_increment
+      scene.health.decrement unless @skip_decrement
       clean_up
     end
 

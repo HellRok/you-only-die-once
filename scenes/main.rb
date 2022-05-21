@@ -81,7 +81,8 @@ class Main
       draw_fps(20, 20)
       $font.draw(
         JSON.generate($data, { pretty_print: true, indent_width: 2 }),
-        colour: RED
+        colour: RED,
+        size: 16
       )
     end
   end

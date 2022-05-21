@@ -20,7 +20,16 @@ class Interaction
     end
 
     def display_text_box
-      if $data[:church] == 0
+      if $data[:mysterious_grave] == 1 && !$data[:visited_church_archive]
+        text = [
+          'It says here that Jade was burnt',
+          'alive as a witch and her body thrown',
+          'into the woods, fearing a proper',
+          'ceremony would free her spirit unto',
+          'them.',
+        ]
+        $data[:visited_church_archive] = true
+      elsif $data[:church] == 0
         text = [
           'You are greeted warmly by a friendly',
           'community.',
