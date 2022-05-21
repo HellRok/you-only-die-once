@@ -72,7 +72,6 @@ class Interaction
           'You go spelunking and have a great time.',
         ]
         $data[:cave] += 1
-        scene.health.decrement
       end
       @text_box = TextBox.new(text) { go_spelunking }
       scene.hud << @text_box

@@ -4,6 +4,7 @@ class Interaction
 
     def initialize
       @text = 'Have a few drinks at the bar?'
+      @skip_decrement = false
     end
 
     def add_child_callback
@@ -56,6 +57,7 @@ class Interaction
           'groggy in the mornings though.'
         ]
       else
+        @skip_decrement = true
         text = [
           'The bar keep greets you with',
           '"On the drinks again?"'
@@ -68,7 +70,7 @@ class Interaction
     def have_drinks
       scene.hud.delete(@text_box)
       $data[:bar] += 1
-      scene.health.decrement
+      scene.health.decrement unless @skip_decrement
       clean_up
     end
 
