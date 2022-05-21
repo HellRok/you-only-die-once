@@ -3,7 +3,7 @@ class Interaction
     include Node
 
     def initialize
-      @text = 'Pot'
+      @text = 'Praise the pot?'
     end
 
     def add_child_callback
@@ -19,22 +19,26 @@ class Interaction
     end
 
     def display_text_box
-      @text_box = TextBox.new(
-        [
-          'Hello there',
-          'this is some text',
-          'like this',
-          'like this',
-          'like this',
+      $data[:pot] += 1
+      if $data[:pot] == 10
+        text = [
+          'You feel invigorated!'
         ]
-      ) { have_therapy }
+        scene.health.decrement
+        $data[:health] += 3
+      else
+        text = [
+          'You get down on your knees and',
+          'praise the pot.',
+          "\nYou have praised the pot #{$data[:pot]} time#{$data[:pot] == 1 ? '' : 's'}.",
+        ]
+      end
+      @text_box = TextBox.new(text) { praise_pot }
       scene.hud << @text_box
     end
 
-    def have_therapy
+    def praise_pot
       scene.hud.delete(@text_box)
-      $data[:therapy] += 1
-      scene.health.decrement
       clean_up
     end
 
