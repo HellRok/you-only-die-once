@@ -3,7 +3,8 @@ class Interaction
     include Node
 
     def initialize
-      @text = 'Travel'
+      @text = 'Travel the world?'
+      @skip_decrement = false
     end
 
     def add_child_callback
@@ -19,22 +20,28 @@ class Interaction
     end
 
     def display_text_box
-      @text_box = TextBox.new(
-        [
-          'Hello there',
-          'this is some text',
-          'like this',
-          'like this',
-          'like this',
+      if $data[:travel] == 0
+        text = [
+          'You visit far off lands and meet',
+          'many interesting people, you see',
+          'amazing sights, and gain a wealth',
+          'of experience!',
+          'You now have no money though.',
         ]
-      ) { have_therapy }
+      else
+        @skip_decrement = true
+        text = [
+          'You cannot afford to travel again...',
+        ]
+      end
+      @text_box = TextBox.new(text) { go_travel }
       scene.hud << @text_box
     end
 
-    def have_therapy
+    def go_travel
       scene.hud.delete(@text_box)
-      $data[:therapy] += 1
-      scene.health.decrement
+      $data[:travel] += 1
+      3.times { scene.health.decrement } unless @skip_decrement
       clean_up
     end
 
