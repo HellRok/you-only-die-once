@@ -68,8 +68,8 @@ class Interaction
 
     def visit_church
       scene.hud.delete(@text_box)
+      $data[:church] += 1
       scene.health.decrement unless @skip_decrement
-      end
       clean_up
     end
 
